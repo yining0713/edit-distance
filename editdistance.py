@@ -1,19 +1,20 @@
 class EditDistance:
 
 
-    def __init__(self, reference, hypothesis):
+    def __init__(self, reference, hypothesis, unit="word"):
         """
         Convert the strings into lists
         If the strings are phrases with more than one word, split by space;
         if the strings have no space, split into a list of chars;
         """
-        if ' ' in reference:
+        if unit == "word":
             self.reference = reference.split(' ')
             self.hypothesis= hypothesis.split(' ')
+        elif unit == "char":
+            self.reference = list(reference)
+            self.hypothesis = list(hypothesis)
         else:
-            print("WARNING: The phrase %s appears to not have been segmented." % reference)
-            self.reference = [reference]
-            self.hypothesis = [hypothesis]
+            print("ERROR: invalid name of unit")
         self.ref_len = len(self.reference)
 
 
