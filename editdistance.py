@@ -1,7 +1,12 @@
-ass EditDistance:
+class EditDistance:
 
 
     def __init__(self, reference, hypothesis):
+        """
+        Convert the strings into lists
+        If the strings are phrases with more than one word, split by space;
+        if the strings have no space, split into a list of chars;
+        """
         if ' ' in reference:
             self.reference = reference.split(' ')
             self.hypothesis= hypothesis.split(' ')
@@ -9,34 +14,23 @@ ass EditDistance:
             print("WARNING: The phrase %s appears to not have been segmented." % reference)
             self.reference = [reference]
             self.hypothesis = [hypothesis]
-            #self.reference = list(reference)
-            #self.hypothesis = list(hypothesis)
         self.ref_len = len(self.reference)
-
-
-    def phrase_info(self):
-        return len(self.reference)
 
 
     def __get_matrix__(self):
 
         #get a list of token, preceded by a placeholder matching the beginning of a phrase;
-
         string1 = ['*'] + self.reference
         string2 = ['*'] + self.hypothesis
 
-
         # set up a (len(string1) + 1) * (len(string2) + 1) matrix
         matrix = [[0] * len(string1) for x in range(len(string2))]
-
 
         #set up the first column and row
         for i in range(len(string1)):
             matrix[0][i] = i
         for j in range(len(string2)):
             matrix[j][0] = j
-
-
 
         #loop through the array
         for i in range(1, len(string2)):
@@ -66,7 +60,7 @@ ass EditDistance:
 
     def word_error_count(self):
         '''
-        return number of Errors
+        return number of errors
         '''
         return self.__get_matrix__()[-1][-1]
 
@@ -168,16 +162,10 @@ ass EditDistance:
 
             elif move[0] == 'diagonal' and move[1] == -1:
                 tracker.append([string1[i], 'substituted', string2[i],i - insert_num,i - delete_num])
-                #index_list_1.append(i - insert_num)
-                #index_list_2.append(i -  delete_num)
-        #tracker: [replaced token, 'mistaken', replacement, index in the first string, index in the second string]
-        #tracker: [deleted token, 'deleted', index in the first string]
-        #tracker: [inserted token, 'inserted', index in the second string]
-        #index_list_1: indices of different token in the first string
-        #index_list_2: indices of different token in the second string
         if alignment:
             return string1, string2
         return tracker
+
 
     def get_deleted_and_substituted(self):
         errored_words = []
