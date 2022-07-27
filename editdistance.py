@@ -58,7 +58,7 @@ class EditDistance:
         return matrix
 
 
-    def word_error_count(self):
+    def error_count(self):
         '''
         return number of errors
         '''
