@@ -1,5 +1,5 @@
 import unittest
-from editdistance import EditDistance
+from stringdiff import EditDistance
 
 TEST1a = "long live the walls we crashed through"
 TEST1b = "long live the wall you crashed through"
